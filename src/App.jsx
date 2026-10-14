@@ -509,12 +509,17 @@ function PayPeriodSection({
     num(periodData.savings.for_myself) +
     num(periodData.savings.travel) +
     num(periodData.savings.maribank);
-  const left = gross - totalSavings;
 
   const loanItems = periodData.checklist.filter(c => c.section === 'loans');
   const homeItems = periodData.checklist.filter(c => c.section === 'home');
   const ownItems = periodData.checklist.filter(c => c.section === 'own');
+
+  const loanTotal = loanItems.reduce((s, c) => s + num(c.amount), 0);
+  const homeTotal = homeItems.reduce((s, c) => s + num(c.amount), 0);
   const ownTotal = ownItems.reduce((s, c) => s + num(c.amount), 0);
+  const totalExpenses = loanTotal + homeTotal + ownTotal;
+
+  const left = gross - totalSavings - totalExpenses;
 
   const hasCalc = num(periodData.dailyRate) > 0 && num(periodData.numDays) > 0;
 
@@ -583,6 +588,11 @@ function PayPeriodSection({
         <div className="strip-item">
           <span className="strip-label">Savings</span>
           <span className="strip-val yellow-text">₱{fmt(totalSavings)}</span>
+        </div>
+        <div className="strip-divider" />
+        <div className="strip-item">
+          <span className="strip-label">Expenses</span>
+          <span className="strip-val red-text">₱{fmt(totalExpenses)}</span>
         </div>
         <div className="strip-divider" />
         <div className="strip-item">
@@ -687,6 +697,13 @@ function PayPeriodSection({
                   />
                 );
               })}
+              {loanTotal > 0 && (
+                <tr className="checklist-subtotal-row">
+                  <td colSpan="3" className="total-label">Loans &amp; Billings Total</td>
+                  <td className="total-amount red-text">₱{fmt(loanTotal)}</td>
+                  <td colSpan="2"></td>
+                </tr>
+              )}
 
               {/* Home Responsibilities Header */}
               <tr className="section-header-row home-section">
@@ -717,6 +734,13 @@ function PayPeriodSection({
                   />
                 );
               })}
+              {homeTotal > 0 && (
+                <tr className="checklist-subtotal-row">
+                  <td colSpan="3" className="total-label">Home Responsibilities Total</td>
+                  <td className="total-amount red-text">₱{fmt(homeTotal)}</td>
+                  <td colSpan="2"></td>
+                </tr>
+              )}
 
               {/* Own Expenses Header */}
               <tr className="section-header-row own-section">
@@ -747,10 +771,17 @@ function PayPeriodSection({
                   />
                 );
               })}
+              {ownTotal > 0 && (
+                <tr className="checklist-subtotal-row">
+                  <td colSpan="3" className="total-label">Own Expenses Total</td>
+                  <td className="total-amount red-text">₱{fmt(ownTotal)}</td>
+                  <td colSpan="2"></td>
+                </tr>
+              )}
 
-              <tr className="checklist-total-row">
-                <td colSpan="3" className="total-label">Own Expenses Total</td>
-                <td className="total-amount">₱{fmt(ownTotal)}</td>
+              <tr className="checklist-total-row grand-total">
+                <td colSpan="3" className="total-label">Total Checklist Expenses</td>
+                <td className="total-amount red-text">₱{fmt(totalExpenses)}</td>
                 <td colSpan="2"></td>
               </tr>
             </tbody>
@@ -806,7 +837,6 @@ function ChecklistRow({ item, globalIdx, periodKey, onChange, onDelete }) {
       <td className="col-pay">
         <input
           type="text"
-          placeholder="e.g. 3/12"
           value={item.payments}
           onChange={e => onChange(periodKey, globalIdx, 'payments', e.target.value)}
           className="inline-input"
@@ -884,7 +914,7 @@ function AnnualOverview({ db, selectedYear, onSelectYear, onOpenMonth }) {
       const own = p1Own + p2Own;
 
       const expenses = loans + home + own;
-      const left = income - savings;
+      const left = income - savings - expenses;
 
       const gotyme = num(record.pay1?.savings?.gotyme) + num(record.pay2?.savings?.gotyme);
       const myself = num(record.pay1?.savings?.for_myself) + num(record.pay2?.savings?.for_myself);

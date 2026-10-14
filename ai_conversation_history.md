@@ -143,3 +143,35 @@ sin1::rffcd-1791969821032-6af283187d30
      - **Overall Summary Page** (Annual KPI totals, monthly comparison bar charts, and 12-month breakdown)
      - **Database Saving** (`💾 Save Month` persists `dailyRate`, `numDays`, and `grossIncome`)
 ---
+**Timestamp:** 2026-10-14T19:20:53+08:00
+**User:** Whenever I input the amounts on checklist it doesn't subtract the income, fix this
+**AI:** Fixed the calculation so checklist amounts are now properly deducted from your income:
+
+1. **Deducted Checklist Expenses from Amount Left**:
+   - Updated the balance formula to `Amount Left = Gross Income - Savings - Total Checklist Expenses` (Loans & Billings + Home Responsibilities + Own Expenses).
+   - Entering any amount into the checklist now immediately updates **Amount Left** in real-time.
+
+2. **Added Expenses to the Summary Strip**:
+   - Added a dedicated **Expenses** badge in the overview strip: `Income | Savings | Expenses | Left`.
+   - All checklist amounts are summed dynamically under **Expenses** in bright rose (`₱{fmt(totalExpenses)}`), and **Left** shows the exact remaining balance.
+
+3. **Checklist Subtotals and Grand Total**:
+   - Added dynamic subtotal rows for each category when amounts are present:
+     - **Loans & Billings Total**
+     - **Home Responsibilities Total**
+     - **Own Expenses Total**
+   - Added a **Total Checklist Expenses** grand total row at the bottom of the table.
+
+4. **Updated Annual Overview Dashboard**:
+   - Updated Net Balance in the Annual Overview to `Total Income - Total Savings - Total Expenses` for accurate multi-month tracking.
+---
+**Timestamp:** 2026-10-14T19:32:02+08:00
+**User:** remove this e.g 3/12, and also align the zeros and the icons on the center
+**AI:** 1. **Removed `e.g. 3/12` Placeholder**:
+   - Cleared the `e.g. 3/12` placeholder from all payment counter inputs in the checklist table so the boxes remain clean and blank until filled.
+   - Centered the text alignment inside the payment inputs for cleaner readability when entering payment counts (e.g. `1` or `3/12`).
+
+2. **Centered Icons and Zeros on KPI Cards**:
+   - Updated the Annual Financial Summary KPI metric cards (**Total Income**, **Total Savings**, **Total Expenses**, and **Net Balance**) to be fully center-aligned.
+   - The icons (💰, 🌷, 💳, 🌟), category labels, and amounts/zeros (`₱0`) are now perfectly centered both vertically and horizontally across desktop and mobile screens.
+---

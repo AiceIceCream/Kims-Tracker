@@ -627,7 +627,8 @@
 .checklist-table .col-remarks { width: 70px; }
 .checklist-table .col-desc { min-width: 105px; }
 .checklist-table .col-amt { width: 80px; }
-.checklist-table .col-pay { width: 70px; }
+.checklist-table .col-pay { width: 70px; text-align: center; }
+.checklist-table .col-pay input { text-align: center; }
 .checklist-table .col-del { width: 22px; text-align: center; }
 
 .checklist-row td {
@@ -836,12 +837,24 @@ input[type="number"] {
   opacity: 1;
 }
 
+.checklist-subtotal-row,
 .checklist-total-row {
   background: linear-gradient(135deg, rgba(212, 149, 106, 0.06), rgba(245, 213, 192, 0.1)) !important;
   border-top: 1.5px dashed rgba(212, 149, 106, 0.3) !important;
 }
 
+.checklist-total-row.grand-total {
+  background: linear-gradient(135deg, rgba(232, 96, 122, 0.08), rgba(244, 168, 188, 0.14)) !important;
+  border-top: 2px solid rgba(232, 96, 122, 0.25) !important;
+  border-bottom: 1.5px solid rgba(232, 96, 122, 0.15) !important;
+}
+
+.checklist-subtotal-row td,
 .checklist-total-row td {
+  padding: 8px 12px !important;
+}
+
+.checklist-total-row.grand-total td {
   padding: 10px 12px !important;
 }
 
@@ -851,6 +864,16 @@ input[type="number"] {
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
   color: var(--text-muted) !important;
+}
+
+.checklist-total-row.grand-total .total-label {
+  color: var(--rose) !important;
+  font-size: 11px !important;
+}
+
+.checklist-total-row.grand-total .total-amount {
+  font-size: 15px !important;
+  font-weight: 900 !important;
 }
 
 /* ===== COLOR UTILITIES ===== */
@@ -1083,6 +1106,9 @@ input[type="number"] {
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   gap: 3px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -1093,9 +1119,12 @@ input[type="number"] {
 }
 
 .kpi-icon {
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1;
   margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .kpi-label {
@@ -1104,6 +1133,7 @@ input[type="number"] {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-muted);
+  text-align: center;
 }
 
 .kpi-value {
@@ -1111,6 +1141,7 @@ input[type="number"] {
   font-weight: 900;
   letter-spacing: -0.4px;
   font-family: var(--font);
+  text-align: center;
 }
 
 .kpi-card.income .kpi-value { color: var(--mint); }
@@ -1510,6 +1541,10 @@ input[type="number"] {
     grid-row: 2;
   }
 
+  .checklist-row .col-pay .inline-input {
+    text-align: center;
+  }
+
   .checklist-row .col-amt {
     grid-column: 4 / 6;
     grid-row: 2;
@@ -1529,36 +1564,58 @@ input[type="number"] {
     color: var(--rose);
   }
 
+  .checklist-subtotal-row,
   .checklist-total-row {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 10px 12px !important;
+    padding: 8px 12px !important;
     border-radius: var(--radius-md) !important;
-    background: linear-gradient(135deg, rgba(212, 149, 106, 0.1), rgba(245, 213, 192, 0.18)) !important;
-    border: 1.5px dashed rgba(212, 149, 106, 0.4) !important;
-    margin-top: 6px !important;
+    background: linear-gradient(135deg, rgba(212, 149, 106, 0.08), rgba(245, 213, 192, 0.14)) !important;
+    border: 1px dashed rgba(212, 149, 106, 0.35) !important;
+    margin-top: 4px !important;
+    margin-bottom: 6px !important;
   }
 
+  .checklist-total-row.grand-total {
+    background: linear-gradient(135deg, rgba(232, 96, 122, 0.12), rgba(244, 168, 188, 0.18)) !important;
+    border: 1.5px solid rgba(232, 96, 122, 0.35) !important;
+    padding: 10px 12px !important;
+    margin-top: 8px !important;
+  }
+
+  .checklist-subtotal-row td,
   .checklist-total-row td {
     display: block !important;
     padding: 0 !important;
     border: none !important;
   }
 
+  .checklist-subtotal-row td:empty,
   .checklist-total-row td:empty {
     display: none !important;
   }
 
+  .checklist-subtotal-row .total-label,
   .checklist-total-row .total-label {
     font-size: 10.5px !important;
     font-weight: 900 !important;
   }
 
+  .checklist-subtotal-row .total-amount,
   .checklist-total-row .total-amount {
-    font-size: 15px !important;
+    font-size: 13.5px !important;
     font-weight: 900 !important;
-    color: var(--gold) !important;
+    color: var(--rose) !important;
+  }
+
+  .checklist-total-row.grand-total .total-label {
+    color: var(--rose) !important;
+    font-size: 11px !important;
+  }
+
+  .checklist-total-row.grand-total .total-amount {
+    font-size: 15px !important;
   }
 
   /* Income & Savings Mobile Optimization */
