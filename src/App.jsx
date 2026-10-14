@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import './App.css';
 
 const MONTHS = [
@@ -53,12 +53,14 @@ function createEmptyMonth(year, month) {
     month,
     year,
     pay1: {
+      dailyRate: '',
       numDays: '',
       grossIncome: '',
       savings: { ...DEFAULT_SAVINGS },
       checklist: DEFAULT_CHECKLIST.map(c => ({ ...c })),
     },
     pay2: {
+      dailyRate: '',
       numDays: '',
       grossIncome: '',
       savings: { ...DEFAULT_SAVINGS },
@@ -167,13 +169,35 @@ export default function App() {
 
   // Update handlers for current month
   const updateIncome = useCallback((periodKey, field, val) => {
-    setData(prev => ({
-      ...prev,
-      [periodKey]: {
-        ...prev[periodKey],
+    setData(prev => {
+      const currentPeriod = prev[periodKey];
+      const updated = {
+        ...currentPeriod,
         [field]: val,
-      },
-    }));
+      };
+
+      if (field === 'dailyRate' || field === 'numDays') {
+        const rateStr = field === 'dailyRate' ? val : (currentPeriod.dailyRate ?? '');
+        const daysStr = field === 'numDays' ? val : (currentPeriod.numDays ?? '');
+
+        const r = parseFloat(rateStr);
+        const d = parseFloat(daysStr);
+
+        if (!isNaN(r) && !isNaN(d) && rateStr !== '' && daysStr !== '') {
+          const total = Math.round(r * d * 100) / 100;
+          updated.grossIncome = total > 0 ? String(total) : '0';
+        } else if (rateStr === '' || daysStr === '') {
+          if (currentPeriod.dailyRate || field === 'dailyRate') {
+            updated.grossIncome = '';
+          }
+        }
+      }
+
+      return {
+        ...prev,
+        [periodKey]: updated,
+      };
+    });
   }, []);
 
   const updateSavings = useCallback((periodKey, field, val) => {
@@ -492,6 +516,8 @@ function PayPeriodSection({
   const ownItems = periodData.checklist.filter(c => c.section === 'own');
   const ownTotal = ownItems.reduce((s, c) => s + num(c.amount), 0);
 
+  const hasCalc = num(periodData.dailyRate) > 0 && num(periodData.numDays) > 0;
+
   return (
     <div className="pay-section">
       {/* Income Card */}
@@ -502,6 +528,16 @@ function PayPeriodSection({
         </div>
         <div className="income-fields">
           <div className="income-field">
+            <label htmlFor={`${periodKey}-rate`}>Salary per Day</label>
+            <input
+              id={`${periodKey}-rate`}
+              type="number"
+              placeholder="0"
+              value={periodData.dailyRate ?? ''}
+              onChange={e => onUpdateIncome(periodKey, 'dailyRate', e.target.value)}
+            />
+          </div>
+          <div className="income-field">
             <label htmlFor={`${periodKey}-days`}>Number of Days</label>
             <input
               id={`${periodKey}-days`}
@@ -511,8 +547,15 @@ function PayPeriodSection({
               onChange={e => onUpdateIncome(periodKey, 'numDays', e.target.value)}
             />
           </div>
-          <div className="income-field">
-            <label htmlFor={`${periodKey}-gross`}>Total 15-Days Income (Gross)</label>
+          <div className="income-field income-field-gross full-width">
+            <div className="income-field-header">
+              <label htmlFor={`${periodKey}-gross`}>Total 15-Days Income (Gross)</label>
+              {hasCalc && (
+                <span className="income-calc-pill">
+                  ⚡ ₱{fmt(periodData.dailyRate)} × {periodData.numDays} {periodData.numDays === '1' ? 'day' : 'days'}
+                </span>
+              )}
+            </div>
             <input
               id={`${periodKey}-gross`}
               type="number"
@@ -785,10 +828,9 @@ function ChecklistRow({ item, globalIdx, periodKey, onChange, onDelete }) {
 
 // ===== ANNUAL OVERVIEW COMPONENT =====
 function AnnualOverview({ db, selectedYear, onSelectYear, onOpenMonth }) {
-  const yearData = db[selectedYear] || {};
-
   // Compute month-by-month stats
   const monthlyStats = useMemo(() => {
+    const yearData = db[selectedYear] || {};
     return MONTHS.map(month => {
       const record = yearData[month];
       if (!record) {
@@ -866,7 +908,7 @@ function AnnualOverview({ db, selectedYear, onSelectYear, onOpenMonth }) {
         savedAt: record.savedAt,
       };
     });
-  }, [yearData]);
+  }, [db, selectedYear]);
 
   // Annual Totals
   const totals = useMemo(() => {

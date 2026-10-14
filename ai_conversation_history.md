@@ -123,3 +123,23 @@ sin1::rffcd-1791969821032-6af283187d30
 4. **Annual Overview & Visual Chart**: Made bar chart columns fluid (`min-width: 20px`, fluid bar widths), enabled touch scrolling for comparison views, and optimized KPI cards for 2-column mobile grids.
 5. Noted browser automated preview tool constraint (open_browser_url Playwright driver download error) and requested user guidance on automated browser testing.
 ---
+**Timestamp:** 2026-10-14T19:09:49+08:00
+**User:** I want to add a salary per day to multiply with the number of days so that it will automatically reflect my income
+**AI:** Added a **Salary per Day** input field that automatically multiplies with the **Number of Days** to calculate your gross income:
+
+1. **New "Salary per Day" Field**:
+   - Added a dedicated number input for **Salary per Day** in the Income card for both pay periods (1st Pay & 2nd Pay).
+   - Arranged side-by-side with **Number of Days** on a balanced 2-column grid.
+
+2. **Automatic Calculation (`Salary / Day × Days = Gross Income`)**:
+   - Entering or updating either **Salary per Day** or **Number of Days** immediately calculates `Salary × Days` and updates **Total 15-Days Income (Gross)**.
+   - A formula indicator pill (e.g., `⚡ ₱800 × 15 days`) dynamically appears so you can verify the calculation at a glance.
+   - Gross income can still be manually edited or fine-tuned if you have bonuses, allowances, or adjustments.
+
+3. **Instant App-Wide Reflection**:
+   - The computed income automatically reflects across:
+     - **Amount Left** (`Income - Savings`)
+     - **Summary Strip** (Income overview)
+     - **Overall Summary Page** (Annual KPI totals, monthly comparison bar charts, and 12-month breakdown)
+     - **Database Saving** (`💾 Save Month` persists `dailyRate`, `numDays`, and `grossIncome`)
+---
