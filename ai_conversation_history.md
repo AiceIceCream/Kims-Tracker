@@ -71,3 +71,46 @@
 **User:** Move the buttons beside the montly budget tracker
 **AI:** Moved the action buttons ("💾 Save Month" and "📊 Overall Summary") to sit horizontally beside the "Monthly Budget Tracker" title on the same row. Grouped the cherry blossom icon and cursive title into a flex unit and right-aligned the buttons with compact pill styling.
 ---
+**Timestamp:** 2026-10-14T17:12:06+08:00
+**User:** Why I can't git add -A this project in my github?
+**AI:** Explained that `git add -A` only stages files locally and actually succeeded (all 17 files are already staged). To upload them to GitHub, they must run `git commit -m "..."` followed by `git push origin main`. Provided the exact commands and workflow.
+---
+**Timestamp:** 2026-10-14T17:19:23+08:00
+**User:** C:\Users\Bryan Medrozo\Documents\New folder\Kims-Tracker>git commit -m "First Commit"
+[main 5dfe985] First Commit
+ 17 files changed, 3987 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 .oxlintrc.json
+ create mode 100644 ai_conversation_history.md
+ create mode 100644 index.html
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ create mode 100644 public/favicon.svg
+ create mode 100644 public/icons.svg
+ create mode 100644 src/App.css
+ create mode 100644 src/App.jsx
+ create mode 100644 src/assets/hero.png
+ create mode 100644 src/assets/react.svg
+ create mode 100644 src/assets/vite.svg
+ create mode 100644 src/index.css
+ create mode 100644 src/main.jsx
+ create mode 100644 vercel.json
+ create mode 100644 vite.config.js
+
+C:\Users\Bryan Medrozo\Documents\New folder\Kims-Tracker>git push origin main
+remote: Permission to AiceIceCream/Kims-Tracker.git denied to Scr0fa.
+fatal: unable to access 'https://github.com/AiceIceCream/Kims-Tracker.git/': The requested URL returned error: 403
+
+C:\Users\Bryan Medrozo\Documents\New folder\Kims-Tracker>
+
+How to login my own github in the cmd
+**AI:** Explained that Windows Credential Manager has cached an old GitHub account (`Scr0fa`), causing a 403 error when pushing to `AiceIceCream/Kims-Tracker`. Provided CMD commands (`cmdkey /delete` and setting the remote URL) and Windows Credential Manager GUI steps to remove the old credential and log in with their `AiceIceCream` account in the browser pop-up.
+---
+**Timestamp:** 2026-10-14T17:24:33+08:00
+**User:** It may have been moved, removed, or never existed.
+
+404 DEPLOYMENT_NOT_FOUND
+
+sin1::rffcd-1791969821032-6af283187d30
+**AI:** Explained the cause of Vercel's `404 DEPLOYMENT_NOT_FOUND` error (the repository has not been imported into Vercel yet, or the URL visited is slightly different/unlinked). Also fixed `vercel.json` encoding from UTF-16LE to UTF-8 without BOM to prevent deployment build issues. Provided step-by-step instructions to import and deploy the repository from vercel.com/new and find the live production URL.
+---
