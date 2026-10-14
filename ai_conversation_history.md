@@ -114,3 +114,12 @@ How to login my own github in the cmd
 sin1::rffcd-1791969821032-6af283187d30
 **AI:** Explained the cause of Vercel's `404 DEPLOYMENT_NOT_FOUND` error (the repository has not been imported into Vercel yet, or the URL visited is slightly different/unlinked). Also fixed `vercel.json` encoding from UTF-16LE to UTF-8 without BOM to prevent deployment build issues. Provided step-by-step instructions to import and deploy the repository from vercel.com/new and find the live production URL.
 ---
+**Timestamp:** 2026-10-14T17:28:25+08:00
+**User:** The UI does not suit the mobile phone, it is broken, fix the ui to adapt to any phone displays.
+**AI:** Overhauled the mobile design system to support all smartphone screens (320px–580px+):
+1. **Checklist Mobile Card Grid**: Transformed the cramped 6-column table into a responsive dual-line mobile card view (Row 1: Checkbox, full-width Description, Delete; Row 2: Notes, Payments counter, Amount) eliminating horizontal overflow and table clipping.
+2. **Responsive Header & Controls**: Shortened action buttons to "💾 Save" and "📊 Overall" on mobile with `.desktop-text`, aligned title and icons without collision, and structured Month/Year dropdowns with full-width centered Draft/Saved badge.
+3. **Safe Viewport & iOS Hygiene**: Updated index.html with `viewport-fit=cover` and user-scalable constraints, added 100dvh support, prevented mobile horizontal page bounce with `overflow-x: hidden`, and added safe-area-inset padding for the bottom nav bar.
+4. **Annual Overview & Visual Chart**: Made bar chart columns fluid (`min-width: 20px`, fluid bar widths), enabled touch scrolling for comparison views, and optimized KPI cards for 2-column mobile grids.
+5. Noted browser automated preview tool constraint (open_browser_url Playwright driver download error) and requested user guidance on automated browser testing.
+---

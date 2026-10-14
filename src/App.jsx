@@ -301,7 +301,7 @@ export default function App() {
                     onClick={handleSaveToDatabase}
                     title="Save current month data to database"
                   >
-                    <span>💾</span> Save Month
+                    <span>💾</span> Save<span className="desktop-text"> Month</span>
                   </button>
                   <button
                     type="button"
@@ -309,7 +309,7 @@ export default function App() {
                     onClick={() => setView('overall')}
                     title="View overall yearly analytics & database"
                   >
-                    <span>📊</span> Overall Summary
+                    <span>📊</span> Overall<span className="desktop-text"> Summary</span>
                   </button>
                 </>
               ) : (
@@ -319,7 +319,7 @@ export default function App() {
                   onClick={() => setView('monthly')}
                   title="Return to monthly budget tracker"
                 >
-                  <span>←</span> Monthly Tracker
+                  <span>←</span> Monthly<span className="desktop-text"> Tracker</span>
                 </button>
               )}
             </div>

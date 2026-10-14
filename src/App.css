@@ -3,9 +3,13 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg-primary);
-  padding-bottom: 80px;
+  padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px));
   position: relative;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* Subtle background pattern */
@@ -27,18 +31,19 @@
 .app-header {
   background: linear-gradient(135deg, #fff0f7 0%, #fdf6f9 60%, #f8f0ff 100%);
   border-bottom: 2px solid var(--blush-soft);
-  padding: 14px 16px 12px;
+  padding: 10px 14px 10px;
   position: sticky;
   top: 0;
   z-index: 100;
   box-shadow: 0 2px 16px rgba(232, 96, 122, 0.12), 0 1px 0 rgba(244, 168, 188, 0.4);
+  width: 100%;
 }
 
 .header-inner {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-width: 600px;
+  max-width: 520px;
   margin: 0 auto;
   width: 100%;
 }
@@ -47,21 +52,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
 }
 
 .header-title-group {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
 }
 
 .header-icon {
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1;
   animation: heartbeat 2s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 @keyframes heartbeat {
@@ -73,7 +80,7 @@
 
 .header-title {
   font-family: var(--font-accent);
-  font-size: clamp(16px, 3.8vw, 24px);
+  font-size: clamp(16px, 4.2vw, 22px);
   font-weight: 700;
   background: linear-gradient(135deg, #e8607a 0%, #c084d8 50%, #d4956a 100%);
   -webkit-background-clip: text;
@@ -81,12 +88,15 @@
   background-clip: text;
   letter-spacing: 0.3px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .header-selects {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .select-group {
@@ -1289,19 +1299,344 @@ input[type="number"] {
 .legend-dot.savings { background: var(--lavender); }
 .legend-dot.expense { background: var(--rose); }
 
-/* ===== RESPONSIVE ===== */
-@media (min-width: 600px) {
-  .app-header { padding: 12px 20px 10px; }
-  .header-inner { flex-direction: row; align-items: center; justify-content: space-between; }
-  .main-content { padding: 12px 14px 28px; }
-  .bottom-nav { display: none; }
-  .app { padding-bottom: 20px; }
+/* ===== RESPONSIVE STYLES ===== */
+
+.desktop-text {
+  display: none;
 }
 
-@media (max-width: 380px) {
-  .income-fields { grid-template-columns: 1fr; }
-  .header-title { font-size: 17px; }
-  .savings-row input { width: 90px; }
-  .bills-table .amount-cell input { width: 90px; }
+@media (min-width: 600px) {
+  .desktop-text {
+    display: inline;
+  }
+  .app-header {
+    padding: 12px 20px 10px;
+  }
+  .header-inner {
+    max-width: 600px;
+  }
+  .main-content {
+    padding: 12px 14px 28px;
+  }
+  .bottom-nav {
+    display: none;
+  }
+  .app {
+    padding-bottom: 20px;
+  }
 }
+
+/* Tablets and Mobile Phones (< 580px) */
+@media (max-width: 580px) {
+  .app-header {
+    padding: 9px 12px 8px;
+  }
+
+  .header-actions {
+    gap: 5px;
+  }
+
+  .nav-btn, .save-btn {
+    padding: 5px 8px;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .header-selects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .select-group {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .select-group label {
+    font-size: 9px;
+  }
+
+  .select-group select {
+    width: 100%;
+    min-width: 0;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .status-badge {
+    grid-column: 1 / -1;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    font-size: 10.5px;
+    padding: 3.5px 8px;
+  }
+
+  /* Checklist Mobile Card Transformation */
+  .checklist-card .table-scroll {
+    overflow-x: visible;
+  }
+
+  .checklist-table,
+  .checklist-table tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .checklist-table thead {
+    display: none;
+  }
+
+  .section-header-row {
+    display: block !important;
+    background: transparent !important;
+    border: none !important;
+    margin: 8px 0 4px !important;
+  }
+
+  .section-header-row td {
+    display: block !important;
+    border-radius: var(--radius-md) !important;
+    padding: 7px 10px !important;
+  }
+
+  .section-header-content {
+    font-size: 10px;
+    font-weight: 900;
+  }
+
+  .checklist-row {
+    display: grid !important;
+    grid-template-columns: 28px 1fr 1fr 92px 24px !important;
+    grid-template-rows: auto auto !important;
+    gap: 5px 6px !important;
+    align-items: center !important;
+    padding: 8px 10px !important;
+    background: var(--bg-card) !important;
+    border: 1.5px solid var(--border) !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: 0 1px 4px rgba(232, 96, 122, 0.05) !important;
+    margin-bottom: 6px !important;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .checklist-row.checked {
+    background: rgba(253, 246, 249, 0.7) !important;
+    border-color: rgba(232, 96, 122, 0.1) !important;
+  }
+
+  .checklist-row td {
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  /* Row 1: Checkbox, Description, Delete */
+  .checklist-row .col-chk {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .checklist-row .col-desc {
+    grid-column: 2 / 5;
+    grid-row: 1;
+  }
+
+  .checklist-row .col-desc .desc-input {
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 6px;
+    background: transparent;
+  }
+
+  .checklist-row .col-del {
+    grid-column: 5;
+    grid-row: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* Row 2: Remarks (Notes), Payment (3/12), Amount (₱) */
+  .checklist-row .col-remarks {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .checklist-row .col-pay {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .checklist-row .col-amt {
+    grid-column: 4 / 6;
+    grid-row: 2;
+  }
+
+  .checklist-row .inline-input {
+    height: 32px;
+    font-size: 12px;
+    padding: 4px 8px;
+    background: var(--bg-input);
+    border-radius: var(--radius-sm);
+  }
+
+  .checklist-row .col-amt .inline-input {
+    font-weight: 900;
+    text-align: right;
+    color: var(--rose);
+  }
+
+  .checklist-total-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px 12px !important;
+    border-radius: var(--radius-md) !important;
+    background: linear-gradient(135deg, rgba(212, 149, 106, 0.1), rgba(245, 213, 192, 0.18)) !important;
+    border: 1.5px dashed rgba(212, 149, 106, 0.4) !important;
+    margin-top: 6px !important;
+  }
+
+  .checklist-total-row td {
+    display: block !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .checklist-total-row td:empty {
+    display: none !important;
+  }
+
+  .checklist-total-row .total-label {
+    font-size: 10.5px !important;
+    font-weight: 900 !important;
+  }
+
+  .checklist-total-row .total-amount {
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    color: var(--gold) !important;
+  }
+
+  /* Income & Savings Mobile Optimization */
+  .income-fields {
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .income-field label {
+    min-height: 24px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .savings-row {
+    padding: 5px 0;
+  }
+
+  .savings-label {
+    font-size: 12.5px;
+  }
+
+  .savings-row input {
+    width: 100px;
+    max-width: 44%;
+  }
+
+  .summary-strip {
+    padding: 0;
+  }
+
+  .strip-item {
+    padding: 7px 4px;
+  }
+
+  .strip-val {
+    font-size: clamp(11.5px, 3.4vw, 13.5px);
+  }
+
+  /* Annual Overview Mobile */
+  .kpi-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .kpi-card {
+    padding: 10px 10px;
+  }
+
+  .kpi-value {
+    font-size: clamp(13px, 3.8vw, 16px);
+  }
+
+  .chart-bars-wrap {
+    gap: 2px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  .chart-col {
+    min-width: 20px;
+  }
+
+  .bar-pill {
+    width: clamp(3px, 1.2vw, 5.5px);
+  }
+
+  .annual-table th, .annual-table td {
+    padding: 6px 6px;
+    font-size: 11px;
+  }
+
+  .annual-table th {
+    font-size: 9px;
+  }
+
+  .breakdown-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* Small phones (< 375px: iPhone SE 1st gen, Galaxy Fold folded) */
+@media (max-width: 375px) {
+  .main-content {
+    padding: 8px 8px 24px;
+  }
+
+  .header-title {
+    font-size: 15px;
+  }
+
+  .header-icon {
+    font-size: 17px;
+  }
+
+  .nav-btn, .save-btn {
+    padding: 4px 6px;
+    font-size: 10px;
+  }
+
+  .income-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .income-field label {
+    min-height: auto;
+  }
+
+  .savings-row input {
+    width: 85px;
+  }
+
+  .checklist-row {
+    grid-template-columns: 24px 1fr 1fr 80px 20px !important;
+  }
+}
+
 
