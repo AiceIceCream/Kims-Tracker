@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Dancing+Script:wght@600;700&display=swap');
+
+/* ===== GLOBAL RESET & TOKENS ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font: 'Nunito', 'Inter', system-ui, sans-serif;
+  --font-accent: 'Dancing Script', cursive;
+
+  /* ✨ Girly Color Palette */
+  --bg-primary: #fdf6f9;
+  --bg-secondary: #fff0f5;
+  --bg-card: #ffffff;
+  --bg-input: #fff5f8;
+  --bg-input-hover: #ffe8f0;
+
+  /* Pinks & Roses */
+  --rose: #e8607a;
+  --rose-soft: rgba(232, 96, 122, 0.12);
+  --blush: #f4a8bc;
+  --blush-soft: rgba(244, 168, 188, 0.2);
+  --hot-pink: #e91e8c;
+  --hot-pink-soft: rgba(233, 30, 140, 0.1);
+
+  /* Lavenders & Purples */
+  --lavender: #c084d8;
+  --lavender-soft: rgba(192, 132, 216, 0.15);
+  --lilac: #e8d5f5;
+  --purple: #9b59b6;
+
+  /* Rose Gold */
+  --gold: #d4956a;
+  --gold-soft: rgba(212, 149, 106, 0.15);
+  --gold-light: #f5d5c0;
+
+  /* Greens & other */
+  --mint: #6dbfa8;
+  --mint-soft: rgba(109, 191, 168, 0.15);
+
+  /* Neutrals */
+  --text-primary: #3d1a2e;
+  --text-secondary: #7a4060;
+  --text-muted: #b07090;
+  --text-label: #5c2a40;
+
+  --border: rgba(232, 96, 122, 0.15);
+  --border-strong: rgba(232, 96, 122, 0.3);
+  --border-focus: rgba(192, 132, 216, 0.6);
+  --shadow-card: 0 4px 20px rgba(232, 96, 122, 0.1);
+  --shadow-glow: 0 0 20px rgba(192, 132, 216, 0.2);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+
+  --transition: all 0.22s ease;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font);
+  border: none;
+  outline: none;
+  transition: var(--transition);
+}
+
+input, select {
+  font-family: var(--font);
+  outline: none;
+  transition: var(--transition);
+}
+
+/* Hide spin arrows / stepper buttons from number inputs */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--blush); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--rose); }
+
+
